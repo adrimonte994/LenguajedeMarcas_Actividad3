@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+            <head>
+                <title><xsl:apply-templates select="ite/@nombre" mode="head"/></title>
+                <style>
+                    body{
+                        font-family: Verdana, Geneva, Tahoma, sans-serif;
+                        color: #000;
+                    }
+
+                    #contenido{
+                        background-color: #E5E5E5;
+                        padding: 5px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 1000px;
+                    }
+                    
+                    #seccion{
+                        width: 100%;
+                    }
+
+                    h1{
+                        padding: 15px;
+                        margin: 10px; 
+                        margin-bottom: 30px;
+                        font-size: 40px;
+                        color: #28427B;
+                    }
+
+                    #boton{
+                        padding: 15px;
+                        margin: 15px; 
+                        margin-right: 100px; 
+                        float: right; 
+                        font-size: 20px;
+                        text-decoration: none;
+                        border: 3px solid #FFBF00;
+                        border-radius: 8px;
+                        background-color: #28427B;
+                        color: #FFBF00;
+                    }
+
+                    #boton:hover{
+                        border: 3px solid #28427B;
+                        background-color: #FFBF00;
+                        color: #28427B;
+                    }
+
+                    ul{
+                        margin: 10px;
+                        padding: 10px;
+                        margin-top: 30px;
+                        list-style-type: none;
+                    }
+
+                    li{
+                        margin: 10px;
+                    }
+
+                    ul ul{
+                        margin: 10px;
+                    }
+
+                    table{
+                        margin: 10px; 
+                        padding: 15px;
+                    }
+                    tt{
+                        font-family: Verdana, Geneva, Tahoma, sans-serif; 
+                        font-weight: bold; 
+                        font-size: 30px; 
+                        padding: 20px; 
+                        margin: 15px; 
+                        color: #28427B;
+                    }
+
+                    th{
+                        margin: 10px; 
+                        padding: 15px;
+                        background-color: #2d447563;
+                    }
+
+                    td{
+                        margin: 10px; 
+                        padding: 15px;
+                        border: 2px solid #2d447563;
+                        
+                    }
+
+                    td:hover{
+                        background-color: #ffbf0081;
+                        
+                    }
+
+                    td:nth-child(4n) a{
+                        color: #28427B;
+                        text-decoration: none;
+                        font-weight: bold;
+                        font-size: 18px;
+                        padding: 14px;
+                    }
+
+                    td:nth-child(4n):hover{
+                        background-color: #FFBF00;
+                    }
+
+                    h2{
+                        margin-bottom: 0px;
+                        margin-left: 30px;
+                        margin-right: 30px;
+                        font-size: 30px; 
+                        padding: 20px; 
+                        color: #28427B;
+                        background-color: #2D447563;
+                    }
+
+                    form{
+                        margin-top: 0px;
+                        margin-bottom: 20px;
+                        margin-left: 30px;
+                        margin-right: 30px;
+                        padding: 20px;
+                        background-color: #2D447563;
+                    }
+
+
+                    input[type="text"]{
+                        font-size: 20px;
+                        padding: 20px;
+                    }
+
+                    select{
+                        font-size: 20px;
+                        padding: 10px;
+                    }
+
+                    option{
+                        font-size: 20px;
+                        padding: 10px;
+                    }
+
+                    input[type="submit"]{
+                        font-size: 20px;
+                        padding: 15x;
+                    }
+
+                    label{
+                        font-size: 20px;
+                        padding: 20px;
+                    }
+
+                    input[type="submit"]{
+                        width: 200px;
+                        padding: 15px;
+                        margin: 15px; 
+                        font-size: 20px;
+                        text-decoration: none;
+                        border: 3px solid #FFBF00;
+                        border-radius: 8px;
+                        background-color: #28427B;
+                        color: #FFBF00;
+                    }
+
+                    input[type="submit"]:hover{
+                        border: 3px solid #28427B;
+                        background-color: #FFBF00;
+                        color: #28427B;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id="contenido">
+                    <div id="seccion">
+                        <h1><xsl:value-of select="ite/@nombre"/></h1> 
+                        <a id="boton" href="{ite/@web}">Accede a la web</a> 
+                        <ul>
+                            <li><xsl:value-of select="ite/empresa"/></li>
+                            <li><xsl:value-of select="ite/telefono"/></li>
+                            <li>Profesores:<ul>
+                                    <xsl:for-each select="ite/profesores/profesor">
+                                        <li><xsl:value-of select="nombre"/></li>
+                                    </xsl:for-each>
+                                </ul>
+                            </li>
+                        </ul>
+                        <table>
+                            <tt>Dirección y Jefatura</tt>
+                            <tr> 
+                                <th>Nombre</th> 
+                                <th>Despacho</th>
+                            </tr>
+                            <tr>
+                                <td><xsl:value-of select="ite/director/nombre"/></td>
+                                <td><xsl:value-of select="ite/director/despacho"/></td> 
+                            </tr>
+                            <tr>
+                                <td><xsl:value-of select="ite/jefe_estudios/nombre"/></td>
+                                <td><xsl:value-of select="ite/jefe_estudios/despacho"/></td> 
+                            </tr>
+                        </table>
+                        <table>
+                            <tt>Oferta educativa</tt>
+                            <tr> 
+                                <th>Nombre del grado</th> 
+                                <th>Tipo de grado</th>
+                                <th>Decreto del título</th>
+                                <th>Competencias del ciclo</th>
+                            </tr>
+                            <xsl:for-each select="ite/ciclos/ciclo">
+                            <tr>
+                                    <td><xsl:value-of select="nombre"/></td>
+                                    <td>
+                                        <xsl:if test="grado = 'Superior'">
+                                        FPII
+                                    </xsl:if>
+                                    </td> 
+                                    <td><xsl:value-of select="decretoTitulo/@año"/></td> 
+                                    <xsl:if test="@id = 'ASIR'">
+                                        <td><a class="descargar" href="lib/contenidos/asir.pdf">Descargar PDF</a></td>
+                                    </xsl:if>
+                                    <xsl:if test="@id = 'DAW'">
+                                        <td><a class="descargar" href="lib/contenidos/daw.pdf">Descargar PDF</a></td>
+                                    </xsl:if>
+                                    <xsl:if test="@id = 'DAM'">
+                                        <td><a class="descargar" href="lib/contenidos/dam.pdf">Descargar PDF</a></td>
+                                    </xsl:if>
+                            </tr>
+                            </xsl:for-each>
+                        </table>
+                        <h2>Solicitud de ingreso</h2>
+                        <form>
+                            <input type="text" placeholder="Introduzca su Nombre"/><br/>
+                            <input type="text" placeholder="Introduzca sus Apellidos"/><br/>
+                            <label for="estudios">Ciclo:</label>
+                            <select id="estudios">
+                                <xsl:for-each select="ite/ciclos/ciclo">
+                                <option><xsl:value-of select="nombre"/></option>
+                                </xsl:for-each>
+                            </select><br/>
+                            <label for="pago">Tipo de pago:</label>
+                            <select id="pago">
+                                <option>Pago único</option>
+                                <option>Pago único con reserva</option>
+                                <option>Pago fraccionado</option>
+                                <option>Pago fraccionado con reserva</option>
+                            </select><br/>
+                            <input type="submit" value="Enviar"/>
+                        </form>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </xsl:template> 
+</xsl:stylesheet>

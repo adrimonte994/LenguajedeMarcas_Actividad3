@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="lib/estilos.css" ?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+            <head>
+                <title><xsl:apply-templates select="ite/@nombre" mode="head"/></title>
+            </head>
+            <body>
+                <div id="contenido">
+                    <div id="seccion">
+                        <h1><xsl:value-of select="ite/@nombre"/></h1> 
+                        <a id="boton" href="{ite/@web}">Accede a la web</a> 
+                        <ul>
+                            <li><xsl:value-of select="ite/empresa"/></li>
+                            <li><xsl:value-of select="ite/telefono"/></li>
+                            <li>Profesores:<ul>
+                                    <xsl:for-each select="ite/profesores/profesor">
+                                        <li><xsl:value-of select="nombre"/></li>
+                                    </xsl:for-each>
+                                </ul>
+                            </li>
+                        </ul>
+                        <table>
+                            <tt>Dirección y Jefatura</tt>
+                            <tr> 
+                                <th>Nombre</th> 
+                                <th>Despacho</th>
+                            </tr>
+                            <tr>
+                                <td><xsl:value-of select="ite/director/nombre"/></td>
+                                <td><xsl:value-of select="ite/director/despacho"/></td> 
+                            </tr>
+                            <tr>
+                                <td><xsl:value-of select="ite/jefe_estudios/nombre"/></td>
+                                <td><xsl:value-of select="ite/jefe_estudios/despacho"/></td> 
+                            </tr>
+                        </table>
+                        <table>
+                            <tt>Oferta educativa</tt>
+                            <tr> 
+                                <th>Nombre del grado</th> 
+                                <th>Tipo de grado</th>
+                                <th>Decreto del título</th>
+                                <th>Competencias del ciclo</th>
+                            </tr>
+                            <xsl:for-each select="ite/ciclos/ciclo">
+                            <tr>
+                                    <td><xsl:value-of select="nombre"/></td>
+                                    <td>
+                                        <xsl:if test="grado = 'Superior'">
+                                        FPII
+                                    </xsl:if>
+                                    </td> 
+                                    <td><xsl:value-of select="decretoTitulo/@año"/></td> 
+                                    <xsl:if test="@id = 'ASIR'">
+                                        <td><a class="descargar" href="lib/contenidos/asir.pdf">Descargar PDF</a></td>
+                                    </xsl:if>
+                                    <xsl:if test="@id = 'DAW'">
+                                        <td><a class="descargar" href="lib/contenidos/daw.pdf">Descargar PDF</a></td>
+                                    </xsl:if>
+                                    <xsl:if test="@id = 'DAM'">
+                                        <td><a class="descargar" href="lib/contenidos/dam.pdf">Descargar PDF</a></td>
+                                    </xsl:if>
+                            </tr>
+                            </xsl:for-each>
+                        </table>
+                        <h2>Solicitud de ingreso</h2>
+                        <form>
+                            <input type="text" placeholder="Introduzca su Nombre"/><br/>
+                            <input type="text" placeholder="Introduzca sus Apellidos"/><br/>
+                            <label for="estudios">Ciclo:</label>
+                            <select id="estudios">
+                                <xsl:for-each select="ite/ciclos/ciclo">
+                                <option><xsl:value-of select="nombre"/></option>
+                                </xsl:for-each>
+                            </select><br/>
+                            <label for="pago">Tipo de pago:</label>
+                            <select id="pago">
+                                <option>Pago único</option>
+                                <option>Pago único con reserva</option>
+                                <option>Pago fraccionado</option>
+                                <option>Pago fraccionado con reserva</option>
+                            </select><br/>
+                            <input type="submit" value="Enviar"/>
+                        </form>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </xsl:template> 
+</xsl:stylesheet>
